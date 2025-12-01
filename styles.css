@@ -249,13 +249,13 @@ width: 100%;
 
 .attr-label {
   font-weight: 300;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .attr-value {
   font-weight: 500;
   margin-top: 4px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .tile b,
@@ -458,7 +458,7 @@ width: 100%;
 
   /* --- TILE GRID --- */
   .tile-grids-wrapper {
-    width: 100%;
+    width: 98%;
     max-width: 360px
   }
 
@@ -476,7 +476,7 @@ width: 100%;
   /* Smaller text inside tiles */
   .tile .attr-label,
   .tile .attr-value {
-    font-size: 10px !important;   /* Was ~16px */
+    font-size: 12px !important;   /* Was ~16px */
     line-height: 1.2;
   }
 
