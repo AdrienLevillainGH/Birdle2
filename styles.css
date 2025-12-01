@@ -92,12 +92,13 @@ body {
 
 .bird-name-display .common-name {
   font-size: 16px;
-  font-weight: normal;
+  font-weight: 350;
   color: white;
 }
 
 .bird-name-display .scientific-name {
   font-size: 16px;
+  font-weight: 350;
   font-style: italic;
   color: white;
   opacity: 1;
@@ -164,15 +165,15 @@ body {
 .extra-info {
   background: #1a1a1a;
   color: #eee;
-  padding: 10px;
+  padding: 4px;
   border-radius: 10px;
-  margin-top: 10px;
+  margin-top: 4px;
   font-size: 13px;
-  line-height: 1.4;
+  line-height: 1.2;
 }
 
 .extra-info p {
-  margin: 4px 0;
+  margin: 0px 0;
 }
 
 .info-link {
@@ -370,24 +371,26 @@ body {
     max-width: none;
     padding: 10px 0;
     align-items: center;
+    margin: 0 auto;
   }
 
   .autocomplete-container {
-    width: 90%;
+    width: 100%;
     max-width: 350px;
     margin: 0 auto;
   }
 
   #guessInput {
-    width: 100%;        /* fixed pixel width */
+    width: 95%;
     height: 40px;
     font-size: 18px;
     padding: 10px 16px;
     border-radius: 10px;
+    margin: 0 auto;
   }
 
   .autocomplete-list {
-    width: 350px;
+    width: 95%;
   }
 
   .autocomplete-item {
@@ -439,12 +442,17 @@ body {
     font-size: 16px;
   }
 
-  .tile-label {
-    font-size: 8px !important;
+  /* Smaller text inside tiles */
+  .tile .attr-label,
+  .tile .attr-value {
+    font-size: 12px !important;   /* Was ~16px */
+    line-height: 1.2;
   }
 
-  .tile-value {
-    font-size: 8px !important;
+  /* Optional: slightly reduce the tile padding too */
+  .tile {
+    padding: 8px;
+    min-height: 60px;
   }
 
 }
