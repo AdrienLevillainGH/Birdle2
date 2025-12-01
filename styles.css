@@ -92,7 +92,7 @@ body {
 
 .bird-name-display .common-name {
   font-size: 16px;
-  font-weight: bold;
+  font-weight: normal;
   color: white;
 }
 
@@ -383,7 +383,7 @@ body {
 
   .tile-label,
   .tile-value {
-    font-size: 14px;       /* readable but compact */
+    font-size: 10px;       /* readable but compact */
   }
 
   .tile-content {
