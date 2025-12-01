@@ -87,7 +87,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: baseline;
-  gap: 8px;
+  gap: 6px;
 }
 
 .bird-name-display .common-name {
@@ -383,11 +383,11 @@ body {
 
   .tile-label,
   .tile-value {
-    font-size: 10px;       /* readable but compact */
+    font-size: 8px;       /* readable but compact */
   }
 
   .tile-content {
-    line-height: 1.2;      /* tight spacing */
+    line-height: 1;      /* tight spacing */
   }
 }
 
@@ -402,12 +402,12 @@ body {
 
   .bird-name-display .common-name,
   .bird-name-display .scientific-name {
-    font-size: 18px;   /* was 16px */
+    font-size: 16px;   /* was 16px */
   }
 
   .tile-label,
   .tile-value {
-    font-size: 15px; /* was 13px */
+    font-size: 12px; /* was 13px */
   }
 
   
