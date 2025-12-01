@@ -368,13 +368,26 @@ body {
 
   /* 2 columns for tiles (Spotle style) */
   .tile-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(4, 1fr) !important;
   }
 
   /* improve tile readability on small screens */
   .tile {
-    padding: 14px 8px;
-    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 5px;      /* reduce height */
+    min-height: 55px;      /* tighter rows */
+  }
+
+  .tile-label,
+  .tile-value {
+    font-size: 14px;       /* readable but compact */
+  }
+
+  .tile-content {
+    line-height: 1.2;      /* tight spacing */
   }
 }
 
@@ -397,6 +410,7 @@ body {
     font-size: 15px; /* was 13px */
   }
 
+  
   #status,
   .status-text {
     font-size: 18px;
