@@ -8,277 +8,82 @@
 body {
   background: #111;
   color: white;
-  font-family: Arial, sans-serif;
+  font-family: "Geist", sans-serif;
   margin: 0;
   padding: 0;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-family: "Geist", sans-serif;
-  font-weight: 400;
 }
+
+/* ---------------------------
+   HEADER + BUTTONS
+--------------------------- */
 
 .title {
   text-align: center;
-  font-size: 40px;
+  font-size: 34px;
   margin-top: 15px;
   font-weight: bold;
 }
 
+/* Original floating buttons → now responsive */
 .top-buttons {
-  position: fixed;
-  right: 20px;
-  top: 15px;
   display: flex;
-  gap: 15px;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 0 10px;
 }
 
 .btn-standard {
   background: white;
   color: black;
-  padding: 0 22px;          /* horizontal only */
+  padding: 0 20px;
   border-radius: 10px;
   border: 2px solid black;
   font-weight: bold;
   cursor: pointer;
-  height: 45px;             /* fixed height */
+  height: 42px;
   display: flex;
-  align-items: center;      /* vertical centering of text */
+  align-items: center;
+  font-size: 15px;
 }
 
-.input-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Mobile: reduce button size, keep on screen */
+@media (max-width: 500px) {
+  .btn-standard {
+    padding: 0 12px;
+    font-size: 13px;
+    height: 38px;
+  }
+  .top-buttons {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
 }
+
+/* ---------------------------
+   SEARCH BAR
+--------------------------- */
 
 #search-block {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-
-  gap: 15px;   /* <--- adjust value to increase/decrease spacing */
-  height: 180px;
-}
-
-.status-text {
-  text-align: center;
-  font-size: 20px;
+  gap: 12px;
   margin-top: 10px;
-}
-
-.rules-panel {
-  background: #222;
-  padding: 20px;
-  border-radius: 10px;
-  margin: 20px;
-}
-
-.hidden {
-  display: none;
-}
-
-/* Bird names */
-.bird-name-display {
-  margin-bottom: 10px;
-  text-align: center;
-  width: 100%;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: baseline; /* aligns italic scientific name nicely */
-  gap: 8px;              /* spacing between names */
-}
-
-.bird-name-display .common-name {
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-}
-
-.bird-name-display .scientific-name {
-  font-size: 16px;
-  font-style: italic;
-  color: white;
-  opacity: 1;
-}
-
-/* Guess rows */
-.guess-row {
-  background: #1A1A1A;
-  padding: 15px;
-  border-radius: 12px;
-  margin-top: 18px;
-}
-
-/* reveal row on top – green background */
-.reveal-row {
-  background: #2ECC71;
-  color: black;
-}
-
-/* Container layout */
-.guess-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 350px;   /* Card width */
-  margin: 0 auto;     /* Center the whole block */
-  gap: 15px;
-}
-/* Image */
-.image-section {
-  position: relative;
-  width: 100%;
-  overflow: visible;   /* allow content to expand */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-}
-
-.bird-photo {
-  width: 100%;
-  max-width: 260px;
-  border-radius: 10px;
-  height: auto;
-  display: block;
-}
-
-/* Info button + panel */
-.info-toggle {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.extra-info {
-  background: #1a1a1a;
-  color: #eee;
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 10px;
-  font-size: 13px;
-  line-height: 1.4;
-}
-
-.extra-info p {
-  margin: 4px 0;
-}
-
-.info-link {
-  color: lightgrey !important;
-  font-weight: normal !important;
-  text-decoration: none !important;
-}
-
-.info-link:hover {
-  text-decoration: underline;  /* optional hover effect */
-  opacity: 0.75;
-}
-
-/* 4 x 2 tile grid */
-.tile-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-
-/* Tiles */
-.tile {
-  padding: 10px;
-  border-radius: 8px;
-  background: #333;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* vertical centering */
-  align-items: center;     /* horizontal centering */
-  overflow-wrap: break-word;
-}
-
-.tile-content {
-  display: flex;
-  flex-direction: column; /* forces line break */
-  align-items: center;    /* centers text vertically */
-  justify-content: center;
-  height: 100%;
-}
-
-.tile-label {
-  font-weight: normal;
-  font-size: 13px;
-}
-
-.tile-value {
-  font-weight: bold;
-  margin-top: 4px;
-  font-size: 13px;
-}
-
-.tile b,
-.tile div {
-  white-space: normal;
-}
-
-/* coloured states for guesses */
-.correct { background: #2ECC71 !important; }
-.partial { background: #F1C40F !important; }
-.wrong   { background: #444 !important; }
-
-/* final reveal box (not used now, but safe to keep if needed elsewhere) */
-.reveal-box {
-  margin-top: 30px;
-  background: #2ECC71;
-  padding: 20px;
-  border-radius: 15px;
-  color: black;
-  font-weight: bold;
-  text-align: center;
-}
-
-/* green background for reveal row (already present, but keep) */
-.reveal-row {
-  background: #1a1a1a;
-  color: #1a1a1a;
-}
-
-/* tiles in the reveal row styled like buttons */
-.reveal-tile {
-  background: #2ECC71 !important;
-  color: white;
-  border: none;
-}
-
-.reveal-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 12px;
-  color: white;
 }
 
 .autocomplete-container {
   position: relative;
-  width: 400;
+  width: 90%;
+  max-width: 450px;
 }
 
 #guessInput {
-  width: 350px;
-  height: 28px; /* Matches submit button height */
-  font-size: 16px;
-  border-radius: 10px;
-  padding: 10px 20px;
+  width: 100%;
+  font-size: 18px;
+  border-radius: 12px;
+  padding: 12px 16px;
   border: 2px solid #ccc;
-  outline: none;
 }
 
 #guessInput:focus {
@@ -287,7 +92,7 @@ body {
 
 .autocomplete-list {
   position: absolute;
-  top: 50px;
+  top: 48px;
   width: 100%;
   background: white;
   color: black;
@@ -299,22 +104,135 @@ body {
   display: none;
 }
 
-.autocomplete-item {
-  padding: 10px;
-  cursor: pointer;
+/* ---------------------------
+   GUESS CARD LAYOUT
+--------------------------- */
+
+.guess-row {
+  background: #1A1A1A;
+  padding: 15px;
+  border-radius: 12px;
+  margin: 18px auto;
+  width: 95%;
+  max-width: 480px; /* MOBILE CARD SIZE LIKE SPOTLE */
+}
+
+.guess-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+}
+
+/* ---------------------------
+   IMAGE + NAME
+--------------------------- */
+
+.bird-name-display {
+  margin-bottom: 6px;
+  text-align: center;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.bird-name-display .common-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.bird-name-display .scientific-name {
   font-size: 16px;
+  opacity: 0.9;
 }
 
-.autocomplete-item:hover {
-  background: #eee;
+.image-section {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.highlight {
-  background: lightpink;
-  font-weight: bold;
+.bird-photo {
+  width: 100%;
+  border-radius: 12px;
 }
 
-.autocomplete-item.active {
-  background: lightgrey;
-  font-weight: bold;
+/* Info icon */
+.info-toggle {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.extra-info {
+  background: #1a1a1a;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+/* ---------------------------
+   TILE GRID
+--------------------------- */
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+/* MOBILE: 2 COLUMNS (Spotle style) */
+@media (max-width: 600px) {
+  .tile-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.tile {
+  padding: 14px 10px;
+  border-radius: 10px;
+  background: #333;
+  text-align: center;
+  font-size: 14px;
+  min-height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.correct { background: #2ECC71 !important; }
+.partial { background: #F1C40F !important; }
+.wrong   { background: #444 !important; }
+
+.reveal-tile {
+  background: #2ECC71 !important;
+}
+
+/* ---------------------------
+   RULES PANEL (better mobile layout)
+--------------------------- */
+
+.rules-panel {
+  background: #222;
+  padding: 18px;
+  border-radius: 12px;
+  margin: 15px auto;
+  max-width: 480px;
+  width: 90%;
+  line-height: 1.45;
 }
