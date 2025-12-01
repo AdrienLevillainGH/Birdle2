@@ -188,7 +188,7 @@ body {
 
     /* Fixed total width for both grids */
 .tile-grids-wrapper {
-  width: 450px;            /* ← set the width you want */
+  width: 360px;            /* ← set the width you want */
   display: flex;
   flex-direction: column;
   align-items: center;     /* center within the card */
@@ -379,7 +379,7 @@ body {
   }
 
   #guessInput {
-    width: 100%;        /* fixed pixel width */
+    width: 90%;        /* fixed pixel width */
     height: 40px;
     font-size: 18px;
     padding: 10px 16px;
@@ -387,7 +387,7 @@ body {
   }
 
   .autocomplete-list {
-    width: 350px;
+    width: 90%;
   }
 
   .autocomplete-item {
@@ -439,12 +439,17 @@ body {
     font-size: 16px;
   }
 
-  .tile-label {
-    font-size: 8px !important;
+  /* Smaller text inside tiles */
+  .tile .attr-label,
+  .tile .attr-value {
+    font-size: 12px !important;   /* Was ~16px */
+    line-height: 1.2;
   }
 
-  .tile-value {
-    font-size: 8px !important;
+  /* Optional: slightly reduce the tile padding too */
+  .tile {
+    padding: 8px;
+    min-height: 60px;
   }
 
 }
