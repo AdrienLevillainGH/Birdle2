@@ -72,6 +72,7 @@ body {
   padding: 20px;
   border-radius: 10px;
   margin: 20px;
+  font-size: 13px;
 }
 
 .hidden {
@@ -81,13 +82,12 @@ body {
 /* Bird names */
 .bird-name-display {
   margin-bottom: 10px;
-  text-align: center;
   width: 100%;
   color: white;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: baseline;
-  gap: 6px;
+  text-align: center;
 }
 
 .bird-name-display .common-name {
@@ -107,9 +107,11 @@ body {
 /* Guess rows */
 .guess-row {
   background: #1A1A1A;
-  padding: 15px;
-  border-radius: 12px;
-  margin-top: 18px;
+  padding: 30px;
+  border-radius: 15px;
+  margin: 15px auto;        /* center the card */
+  max-width: 500px;         /* <<< the new card limit */
+  width: 100%;              /* shrink nicely on mobile */
 }
 
 /* reveal row on top – green background */
@@ -152,14 +154,21 @@ body {
   position: absolute;
   bottom: 5px;
   right: 5px;
-  background: rgba(0, 0, 0, 0.7);
+  background: none;
   color: white;
-  border: none;
+  border: #1A1A1A;
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px; /* updated for Bootstrap icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-toggle i {
+  font-size: 22px;
 }
 
 .extra-info {
@@ -168,7 +177,7 @@ body {
   padding: 4px;
   border-radius: 10px;
   margin-top: 4px;
-  font-size: 13px;
+  font-size: 10px;
   line-height: 1.2;
 }
 
@@ -195,7 +204,7 @@ body {
   align-items: center;     /* center within the card */
 }
 
-  .grid-top,
+.grid-top,
 .grid-bottom {
   width: 100%;             /* inherit the fixed width */
   display: grid;
@@ -203,17 +212,17 @@ body {
   gap: 8px;
 }
 
-  .grid-top {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  width: 100%;
+.grid-top {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+width: 100%;
 }
 
 .grid-bottom {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   width: 100%;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 /* Tiles */
@@ -238,15 +247,15 @@ body {
   height: 100%;
 }
 
-.tile-label {
-  font-weight: normal;
-  font-size: 13px;
+.attr-label {
+  font-weight: 300;
+  font-size: 14px;
 }
 
-.tile-value {
-  font-weight: bold;
+.attr-value {
+  font-weight: 500;
   margin-top: 4px;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .tile b,
@@ -343,6 +352,28 @@ body {
   font-weight: bold;
 }
 
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.icon-btn i {
+  font-size: 22px;
+  color: black;
+}
+
+.icon-btn:hover {
+  background: #e8e8e8;
+}
+
 /* ---------------------------------------------------
       CLEAN MOBILE LAYOUT — ALL PIXEL VALUES
 --------------------------------------------------- */
@@ -394,7 +425,7 @@ body {
   }
 
   .autocomplete-item {
-    font-size: 18px;
+    font-size: 14px;
     padding: 10px;
   }
 
@@ -445,7 +476,7 @@ body {
   /* Smaller text inside tiles */
   .tile .attr-label,
   .tile .attr-value {
-    font-size: 12px !important;   /* Was ~16px */
+    font-size: 10px !important;   /* Was ~16px */
     line-height: 1.2;
   }
 

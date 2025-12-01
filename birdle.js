@@ -128,11 +128,9 @@ function handleGuess(choice) {
     guess["Beak.Index"] > targetBird["Beak.Index"] ? "↓" : "";
 
   const tiles = [
-    { label: "Taxa", value: `${guess.Order} > ${guess.Family}`, score: compareTaxa(guess, targetBird) },
+    { label: "Taxa", value: `${guess.Order}<br>&gt;&nbsp;${guess.Family}`, score: compareTaxa(guess, targetBird)},
     { label: "Mass", value: `${guess.Mass} g ${massArrow}`, score: compareMass(guess.Mass, targetBird.Mass) },
-    { label: "Beak Index", 
-      value: `${guess["Beak.Index"]?.toFixed(2)} ${beakArrow}`, 
-    score: compareBeak(guess["Beak.Index"], targetBird["Beak.Index"]) },
+    { label: "Beak Index", value: `${guess["Beak.Index"]?.toFixed(2)} ${beakArrow}`, score: compareBeak(guess["Beak.Index"], targetBird["Beak.Index"]) },
     { label: "Realm", value: guess.Realm, score: compareRealm(guess.Realm, targetBird.Realm) },
     { label: "Habitat", value: guess.Habitat, score: compareExact(guess.Habitat, targetBird.Habitat) },
     { label: "Migration", value: guess.Migration, score: compareExact(guess.Migration, targetBird.Migration) },
@@ -173,7 +171,7 @@ function displayGuess(name, tiles) {
       return img ? `<img class="bird-photo" src="${img}" />` : "<div>No image</div>";
       })()}
 
-  <button class="info-toggle">ℹ️</button>
+  <button class="info-toggle"><i class="bi bi-info-circle-fill"></i></button>
 
         <div class="extra-info hidden">
 
@@ -263,7 +261,7 @@ function revealFinal() {
         return img ? `<img class="bird-photo" src="${img}" />` : "";
         })()}
 
-        <button class="info-toggle">ℹ️</button>
+        <button class="info-toggle"><i class="bi bi-info-circle-fill"></i></button>
 
         <div class="extra-info hidden">
 
@@ -302,7 +300,7 @@ function revealFinal() {
   `;
 
   const tiles = [
-    { label: "Taxa", value: `${bird.Order} > ${bird.Family}`, score: "" },
+    { label: "Taxa", value: `${guess.Order}<br>&gt;&nbsp;${guess.Family}`, score: compareTaxa(guess, targetBird)},
     { label: "Mass", value: `${bird.Mass} g`, score: "" },
     { label: "Beak Index", value: bird["Beak.Index"].toFixed(2), score: "" },
     { label: "Realm", value: bird.Realm, score: "" },
