@@ -199,22 +199,39 @@ function displayGuess(name, tiles) {
 
       </div>
 
-      <!-- TILE GRID -->
-      <div class="tile-grid"></div>
+      <!-- TILE GRIDS -->
+      <div class="tile-grids-wrapper">
+      <div class="tile-grid grid-top"></div>
+      <div class="tile-grid grid-bottom"></div>
+      </div>
 
       </div>
       `;
 
-  const grid = row.querySelector(".tile-grid");
-  tiles.forEach(t => {
-    grid.innerHTML += `
-      <div class="tile ${t.score}">
-        <div class="tile-content">
-          <span class="attr-label">${t.label}</span>
-          <span class="attr-value"><b>${t.value}</b></span>
-        </div>
-      </div>`;
-  });
+  const gridTop = row.querySelector(".grid-top");
+const gridBottom = row.querySelector(".grid-bottom");
+
+// First 4 tiles → top grid
+tiles.slice(0, 4).forEach(t => {
+  gridTop.innerHTML += `
+    <div class="tile ${t.score}">
+      <div class="tile-content">
+        <span class="attr-label">${t.label}</span>
+        <span class="attr-value"><b>${t.value}</b></span>
+      </div>
+    </div>`;
+});
+
+// Last 4 tiles → bottom grid
+tiles.slice(4).forEach(t => {
+  gridBottom.innerHTML += `
+    <div class="tile ${t.score}">
+      <div class="tile-content">
+        <span class="attr-label">${t.label}</span>
+        <span class="attr-value"><b>${t.value}</b></span>
+      </div>
+    </div>`;
+});
 
   row.querySelector(".info-toggle").addEventListener("click", (e) => {
   const panel = e.target.nextElementSibling;
@@ -276,7 +293,10 @@ function revealFinal() {
       <span class="scientific-name"><i>(${bird.Sname})</i></span>
       </h2>
 
-      <div class="tile-grid"></div>
+      <div class="tile-grids-wrapper">
+      <div class="tile-grid grid-top"></div>
+      <div class="tile-grid grid-bottom"></div>
+</div>
 
     </div>
   `;
