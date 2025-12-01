@@ -197,6 +197,7 @@ body {
 .tile {
   padding: 10px;
   border-radius: 8px;
+  min-height: 70px;
   background: #333;
   text-align: center;
   display: flex;
@@ -374,5 +375,46 @@ body {
   .tile {
     padding: 14px 8px;
     font-size: 14px;
+  }
+}
+
+/* -----------------------------
+   MOBILE FONT IMPROVEMENTS
+------------------------------*/
+@media (max-width: 600px) {
+
+  .title {
+    font-size: 32px;   /* was 40px */
+  }
+
+  .bird-name-display .common-name,
+  .bird-name-display .scientific-name {
+    font-size: 18px;   /* was 16px */
+  }
+
+  .tile-label,
+  .tile-value {
+    font-size: 15px; /* was 13px */
+  }
+
+  #status,
+  .status-text {
+    font-size: 18px;
+  }
+
+  .autocomplete-item {
+    font-size: 18px;
+  }
+
+  #guessInput {
+    font-size: 18px;
+  }
+
+  .rules-panel {
+    font-size: 16px;
+  }
+
+  .extra-info {
+    font-size: 15px;
   }
 }
