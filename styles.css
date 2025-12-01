@@ -476,7 +476,7 @@ width: 100%;
   /* Smaller text inside tiles */
   .tile .attr-label,
   .tile .attr-value {
-    font-size: 12px !important;   /* Was ~16px */
+    font-size: 13px !important;   /* Was ~16px */
     line-height: 1.2;
   }
 
