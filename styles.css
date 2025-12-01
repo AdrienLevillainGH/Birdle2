@@ -294,7 +294,8 @@ body {
 }
 
 #guessInput {
-  width: 350px;
+  width: 100%;
+  max-width: 350px; /* desktop-friendly */
   height: 28px;
   font-size: 16px;
   border-radius: 10px;
@@ -342,14 +343,17 @@ body {
 }
 
 /* ---------------------------------------------------
-   MOBILE OPTIMIZATIONS (minimal, non-destructive)
+      CLEAN MOBILE LAYOUT — ALL PIXEL VALUES
 --------------------------------------------------- */
-
 @media (max-width: 600px) {
 
-  /* center top buttons, keep same look */
+  /* --- GLOBAL LAYOUT --- */
+  .title {
+    font-size: 32px;
+  }
+
   .top-buttons {
-    position: static !important;
+    position: static;
     justify-content: center;
     margin-top: 10px;
   }
@@ -360,75 +364,87 @@ body {
     font-size: 14px;
   }
 
-  /* responsive input */
+  /* --- SEARCH BAR + AUTOCOMPLETE --- */
+  #search-block {
+    width: 100%;
+    max-width: none;
+    padding: 10px 0;
+    align-items: center;
+  }
+
   .autocomplete-container {
-    width: 90% !important;
-    max-width: 450px;
+    width: 90%;
+    max-width: 350px;
+    margin: 0 auto;
   }
 
   #guessInput {
-    width: 100% !important;
+    width: 100%;        /* fixed pixel width */
+    height: 40px;
     font-size: 18px;
+    padding: 10px 16px;
+    border-radius: 10px;
   }
 
-  /* widen guess cards */
-  .guess-container {
-    max-width: 480px !important;
-    width: 100%;
-  }
-
-  .guess-row {
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* slightly larger image */
-  .bird-photo {
-    max-width: 330px !important;
-  }
-
-
-}
-
-/* -----------------------------
-   MOBILE FONT IMPROVEMENTS
-------------------------------*/
-@media (max-width: 600px) {
-
-  .title {
-    font-size: 32px;   /* was 40px */
-  }
-
-  .bird-name-display .common-name,
-  .bird-name-display .scientific-name {
-    font-size: 16px;   /* was 16px */
-  }
-
-  .tile-label,
-  .tile-value {
-    font-size: 12px; /* was 13px */
-  }
-
-  
-  #status,
-  .status-text {
-    font-size: 18px;
+  .autocomplete-list {
+    width: 350px;
   }
 
   .autocomplete-item {
     font-size: 18px;
+    padding: 10px;
   }
 
-  #guessInput {
-    font-size: 18px;
+  /* --- STATUS TEXT --- */
+  #status {
+    width: 350px;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 6px;
   }
 
-  .rules-panel {
+  /* --- GUESS ROW --- */
+  .guess-row {
+    width: 95%;
+    max-width: 360px;     /* clean pixel width */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+  }
+
+  .guess-container {
+    max-width: 360px;
+  }
+
+  /* --- IMAGE --- */
+  .bird-photo {
+    width: 260px;
+    height: auto;
+  }
+
+  /* --- TILE GRID --- */
+  .tile-grids-wrapper {
+    width: 100%;
+    max-width: 360px
+  }
+
+  .grid-top,
+  .grid-bottom {
+    width: 100%
+  }
+
+  /* --- TEXT SIZES --- */
+  .bird-name-display .common-name,
+  .bird-name-display .scientific-name {
     font-size: 16px;
   }
 
-  .extra-info {
-    font-size: 15px;
+  .tile-label {
+    font-size: 8px !important;
   }
+
+  .tile-value {
+    font-size: 8px !important;
+  }
+
 }
