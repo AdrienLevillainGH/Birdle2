@@ -248,7 +248,7 @@ width: 100%;
 }
 
 .attr-label {
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
 }
 
@@ -366,7 +366,7 @@ width: 100%;
 }
 
 .icon-btn i {
-  font-size: 22px;
+  font-size: 30px;
   color: black;
 }
 
@@ -476,7 +476,7 @@ width: 100%;
   /* Smaller text inside tiles */
   .tile .attr-label,
   .tile .attr-value {
-    font-size: 13px !important;   /* Was ~16px */
+    font-size: 14px !important;   /* Was ~16px */
     line-height: 1.2;
   }
 
