@@ -40,12 +40,12 @@ body {
     right: 0;
     left: 0; /* ensures full width */
     width: 100%;
-    height: 60px;
+    height: 45px;
 
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 
     padding: 0 20px;
     background: #111; /* matches site background */
@@ -53,9 +53,37 @@ body {
 
     box-sizing: border-box;
 }
+
 /* Ensure page content is not hidden under fixed bar */
 body {
   padding-top: 70px;
+}
+
+.lang-menu {
+    position: absolute;
+    top: 60px;          /* appears below header */
+    right: 20px;
+    background: white;
+    color: black;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    font-size: 15px;
+    z-index: 9999;
+}
+
+.lang-menu div {
+    padding: 10px 15px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.lang-menu div:hover {
+    background: #eee;
+}
+
+.lang-menu.hidden {
+    display: none;
 }
 
 .title {
@@ -107,6 +135,18 @@ body {
   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
+/* Fine control of line spacing inside Rules modal */
+
+
+.modal-content h3,
+.modal-content p.rules-text {
+    margin-top: 6px !important;
+    margin-bottom: 6px !important;
+    line-height: 1.4;
+}
+
+
+
 /* Close icon */
 .close-btn {
   position: absolute;
@@ -124,9 +164,9 @@ body {
 
 /* Content formatting */
 .modal-inner h2 {
-  margin-top: 10px;
-  font-size: 24px;
-  margin-bottom: 10px;
+  margin-top: 8px;
+  font-size: 30px;
+  margin-bottom: 8px;
 }
 
 .modal-inner ul {
@@ -177,7 +217,8 @@ body {
 
 /* Expanded detail section */
 .rules-details {
-  margin-top: 20px;
+  font-size: 15px;
+  margin-top: 15px;
   background: #111;
   padding: 18px;
   border-radius: 12px;
@@ -224,8 +265,8 @@ body {
    ICON BUTTON (restart, help, language)
 --------------------------------------- */
 .icon-btn {
-  width: 42px;
-  height: 42px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: white;
   color: black;
@@ -238,7 +279,7 @@ body {
 }
 
 .icon-btn i {
-  font-size: 26px;
+  font-size: 20px;
   color: black;
 }
 
@@ -248,7 +289,7 @@ body {
 
 /* Language icon specifically */
 .lang-btn i {
-  font-size: 28px;
+  font-size: 26px;
 }
 
 /* -------------------------------
@@ -284,7 +325,7 @@ body {
 .status-text {
   text-align: center;
   font-size: 16px;
-  margin-top: 10px;
+  font-weight: 300;
 }
 
 .rules-panel {
@@ -529,7 +570,7 @@ body {
     cursor: pointer;
     padding: 0;
     margin: 0;
-    color: #555;
+    color: #333;
     font-size: 20px;
     display: flex;
     align-items: center;
@@ -667,8 +708,8 @@ body {
   #status {
     width: 350px;
     text-align: center;
-    font-size: 20px;
-    margin-top: 6px;
+    font-size: 16px;
+    font-weight: 300;
   }
 
   .guess-row {

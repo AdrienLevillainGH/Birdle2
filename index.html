@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.4/font/bootstrap-icons.min.css">
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
@@ -22,10 +21,19 @@
         <i class="bi bi-question"></i>
     </button>
 
-    <select id="langSelect" class="icon-btn">
-        <option value="en">EN</option>
-        <option value="fr">FR</option>
+    <button id="langBtn" class="icon-btn" title="Change language">
+    <i class="bi bi-translate"></i>
+    </button>
+
+    <select id="langSelect" style="display:none;">
+    <option value="en">EN</option>
+    <option value="fr">FR</option>
     </select>
+
+    <div id="langMenu" class="lang-menu hidden">
+    <div data-lang="en">English</div>
+    <div data-lang="fr">Français</div>
+    </div>
 
 </div>
 
@@ -55,7 +63,7 @@
 
             <!-- DICE BUTTON INSIDE THE INPUT BAR -->
             <button id="randomBtn" class="input-icon-btn">
-            <i class="bi bi-dice-5"></i>
+            <i class="bi bi-dice-5-fill"></i>
             </button>
             </div>
         </div>
@@ -73,9 +81,10 @@
           <i class="bi bi-x-lg"></i>
       </button>
 
-      <h2>How to Play</h2>
+      <h2>HOW TO PLAY?</h2>
       <h3>Guess the bird in 10 tries.</h3>
-      <p>Each guess reveal the attributes of birds. Select any attribute to learn more.</p>
+      <p class="rules-text"><i class="bi bi-dice-5-fill"></i> Guess a random bird.</p>
+      <p class="rules-text">Each guess reveal the attributes of birds. <span style="font-weight:600;">Select any attribute to learn more.</p>
 
       <div class="rules-attribute-grid">
           <div class="rules-attr-tile" data-attr="taxa">Taxa</div>

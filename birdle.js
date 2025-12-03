@@ -99,6 +99,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
+// Translation icon mechanisms
+
+  const langBtn = document.getElementById("langBtn");
+const langMenu = document.getElementById("langMenu");
+
+langBtn.addEventListener("click", () => {
+    langMenu.classList.toggle("hidden");
+});
+
+langMenu.addEventListener("click", (e) => {
+    if (!e.target.dataset.lang) return;
+
+    const lang = e.target.dataset.lang;
+    document.getElementById("langSelect").value = lang;
+
+    // trigger existing language change logic
+    document.getElementById("langSelect").dispatchEvent(new Event("change"));
+
+    langMenu.classList.add("hidden");
+});
+
+// Close menu when clicking outside
+document.addEventListener("click", e => {
+    if (!e.target.closest(".icon-btn") && !e.target.closest(".lang-menu")) {
+        langMenu.classList.add("hidden");
+    }
+});
 
 // Reval mystery bird modal tile
 
@@ -154,7 +181,7 @@ const ATTRIBUTE_INFO = {
   },
   beak: {
     title: "Beak",
-    desc: "Length of the beak relative to the specie body mass.\nVaries between 0 and 1. High values suggest a long beak.\nArrows show direction.",
+    desc: "Length of the beak relative to the specie body mass. Varies between 0 and 1. High values suggest a long beak.\nArrows show direction.",
     buttons: [
       { cls: "incorrect", label: "Incorrect" },
       { cls: "partial", label: "Close\n(±0.125)" },
