@@ -29,6 +29,20 @@
 
 </div>
 
+<!-- FINAL RESULT MODAL -->
+<div id="finalModal" class="modal-overlay hidden">
+
+  <div class="modal-content">
+      <button id="closeFinal" class="close-btn">
+          <i class="bi bi-x-lg"></i>
+      </button>
+
+      <h2>Today's mystery bird was...</h2>
+
+      <div id="finalBirdBox" style="text-align:center; margin-top:15px;"></div>
+  </div>
+
+</div>
 
 <div class="hero">
     <div class="title">🦜 BIRDLE</div>
@@ -37,8 +51,12 @@
     <div id="search-block">
         <div class="input-row">
             <div class="autocomplete-container">
-                <input id="guessInput" type="text" placeholder="Type a bird name..." autocomplete="off">
-                <!-- autocomplete list is created in JS, this is just the container -->
+            <input id="guessInput" type="text" placeholder="Type a bird name..." autocomplete="off">
+
+            <!-- DICE BUTTON INSIDE THE INPUT BAR -->
+            <button id="randomBtn" class="input-icon-btn">
+            <i class="bi bi-dice-5"></i>
+            </button>
             </div>
         </div>
 
@@ -73,6 +91,21 @@
       <!-- EXPANDED ATTRIBUTE PANEL -->
       <div id="rulesDetails" class="rules-details hidden"></div>
 
+  </div>
+
+</div>
+
+<!-- FINAL RESULT MODAL -->
+<div id="finalModal" class="modal-overlay hidden">
+
+  <div class="modal-content">
+      <button id="closeFinal" class="close-btn">
+          <i class="bi bi-x-lg"></i>
+      </button>
+
+      <h2>Today's mystery bird was...</h2>
+
+      <div id="finalBirdBox" style="text-align:center; margin-top:15px;"></div>
   </div>
 
 </div>

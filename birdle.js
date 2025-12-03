@@ -40,6 +40,24 @@ fetch("birds.json")
   });
 
 
+// ------------------------
+// DICE MECHANISMS
+// ------------------------
+
+document.getElementById("randomBtn").addEventListener("click", () => {
+    if (gameOver) return;
+
+    // Pick random bird
+    const randomBird = birds[Math.floor(Math.random() * birds.length)];
+
+    // Set input value
+    const input = document.getElementById("guessInput");
+    input.value = `${randomBird[LANG_MAP[currentLang]]} (${randomBird.Sname})`;
+    input.dataset.fromSuggestion = "true";
+
+    // Submit guess automatically
+    handleGuess(randomBird.Name);
+});
 
 // ------------------------
 // RULES MODAL SYSTEM
@@ -68,7 +86,45 @@ document.addEventListener("DOMContentLoaded", () => {
         rulesModal.classList.add("hidden");
       }
     });
-});
+
+    document.getElementById("closeFinal").onclick = () => {
+    document.getElementById("finalModal").classList.add("hidden");
+    };
+
+    document.getElementById("finalModal").addEventListener("click", (e) => {
+    if (e.target === document.getElementById("finalModal")) {
+        document.getElementById("finalModal").classList.add("hidden");
+    }
+    });
+
+  });
+
+
+// Reval mystery bird modal tile
+
+function showFinalModal() {
+    const box = document.getElementById("finalBirdBox");
+    const bird = targetBird;
+
+    const imgUrl = extractMLImage(bird.Picture);
+
+    // bird name according to language
+    const field = LANG_MAP[currentLang];
+    const commonName = bird[field];
+    const sci = bird.Sname;
+
+    box.innerHTML = `
+        <div style="font-size:18px; font-weight:500; margin-bottom:0px;">${commonName}</div>
+        <div style="font-size:18px; font-weight:500; font-style:italic; opacity:1; margin-bottom:6px;">(${sci})</div>
+
+        ${imgUrl 
+            ? `<img src="${imgUrl}" style="width:100%; max-width:350px; border-radius:12px;">`
+            : "<div>No image available</div>"
+        }
+    `;
+
+    document.getElementById("finalModal").classList.remove("hidden");
+}
 
 // ---------------------------------------
 // RULES ATTRIBUTE SYSTEM (Spotle style)
@@ -289,6 +345,7 @@ function handleGuess(choice) {
     revealFinal(true);    // your existing win reveal UI
     gameOver = true;
     disableSearchBar();
+    showFinalModal();
     return;
   }
 
@@ -323,6 +380,7 @@ function handleGuess(choice) {
     revealFinal();
     gameOver = true;
     disableSearchBar();
+    showFinalModal();
   }
 }
 

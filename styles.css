@@ -518,6 +518,28 @@ body {
   border-color: white;
 }
 
+/* Dice button inside input */
+.input-icon-btn {
+    position: absolute;
+    right: 12px;        /* distance from right of input */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    color: #555;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-icon-btn:hover i {
+    color: #222;
+}
+
 /* Autocomplete */
 .autocomplete-container {
   position: relative;
