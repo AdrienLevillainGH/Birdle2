@@ -18,6 +18,19 @@ body {
   overflow-x: hidden;
 }
 
+
+/* Center the whole hero block (title + subtitle + search) */
+.hero {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;              /* centers the entire block */
+    display: flex;
+    flex-direction: column;
+    align-items: center;         /* centers children horizontally */
+    text-align: center;
+}
+
+
 /* ---------------------------------------------------
       FIXED HEADBAND (like Spotle)
 --------------------------------------------------- */
@@ -260,13 +273,12 @@ body {
   align-items: center;
 }
 
+/* Search block layout */
 #search-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 .status-text {
@@ -313,7 +325,7 @@ body {
 /* Guess rows */
 .guess-row {
   background: #1A1A1A;
-  padding: 30px;
+  padding: 15px;
   border-radius: 15px;
   margin: 15px auto;
   max-width: 500px;
@@ -486,47 +498,57 @@ body {
   color: white;
 }
 
-/* Autocomplete */
-.autocomplete-container {
-  position: relative;
-  width: 400px;
-}
-
+/* The input itself */
 #guessInput {
-    width: 100%;
-    padding: 10px 16px;     /* ↓ smaller height */
-    border: none;           /* remove border */
-    outline: none;          /* remove focus outline */
-    border-radius: 20px;    /* ← more rounded */
+    width: 500px;
+    max-width: 80vw;            /* responsive */
+    height: 50px;
+    padding: 0 16px;
+    border: none;
+    outline: none;
+    border-radius: 25px;
     font-size: 16px;
-    background: #ffffff;    /* white input */
+    background: white;
     color: #000;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.25);   /* soft shadow */
-    transition: background 0.2s, box-shadow 0.2s;
+    display: block;
+    margin: 0 auto;             /* centers inside container */
 }
 
 #guessInput:focus {
   border-color: white;
 }
 
-.autocomplete-list {
-  position: absolute;
-  top: 50px;
+/* Autocomplete */
+.autocomplete-container {
+  position: relative;
   width: 100%;
-  background: white;
-  color: black;
-  max-height: 250px;
-  overflow-y: auto;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-  z-index: 9999;
-  display: none;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* The dropdown aligned perfectly under the input */
+.autocomplete-list {
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%); /* centers under the input */
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    color: black;
+    max-height: 250px;
+    overflow-y: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    z-index: 9999;
+    display: none;
 }
 
 .autocomplete-item {
   padding: 10px;
   cursor: pointer;
   font-size: 16px;
+  text-align: left;
 }
 
 .autocomplete-item:hover {
@@ -535,12 +557,12 @@ body {
 
 .highlight {
   background: lightpink;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .autocomplete-item.active {
   background: lightgrey;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 /* Greyed-out disabled search bar */
@@ -554,6 +576,18 @@ body {
 
 .autocomplete-list.disabled {
   display: none !important;
+}
+
+/* Hide scrollbar on desktop */
+@media (hover: hover) and (pointer: fine) {
+    ::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
+    }
+
+    body {
+        scrollbar-width: none;   /* Firefox */
+    }
 }
 
 /* -------------------------------------
@@ -585,16 +619,18 @@ body {
   }
 
   #guessInput {
-    width: 95%;
-    height: 25px;
+    width: 80vw;
+    max-width: 360px;
+    height: 40px;
     font-size: 16px;
-    padding: 10px 16px;
+    padding: 0 16px;
     border-radius: 25px;
     margin: 0 auto;
   }
 
   .autocomplete-list {
-    width: 95%;
+    max-width: 360px;
+    width: 100%;
   }
 
   .autocomplete-item {
@@ -610,7 +646,7 @@ body {
   }
 
   .guess-row {
-    width: 95%;
+    width: 100%;
     max-width: 360px;
     margin-left: auto;
     margin-right: auto;

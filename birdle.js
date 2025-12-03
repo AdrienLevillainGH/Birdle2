@@ -194,7 +194,7 @@ function extractMLCode(iframeHtml) {
 
 function disableSearchBar() {
   const input = document.getElementById("guessInput");
-  const list = document.getElementById("autocompleteList");
+  const list = document.getElementById("autocomplete-list");
 
   input.classList.add("disabled");
   input.setAttribute("disabled", "true");
@@ -211,7 +211,7 @@ function startGame() {
 
   // Re-enable search bar
   const input = document.getElementById("guessInput");
-  const list = document.getElementById("autocompleteList");
+  const list = document.getElementById("autocomplete-list");
   input.classList.remove("disabled");
   input.removeAttribute("disabled");
   list.classList.remove("disabled");
@@ -443,7 +443,7 @@ function setupAutocomplete() {
   const wrapper = document.querySelector(".autocomplete-container");
 
   const list = document.createElement("div");
-  list.id = "autocompleteList";
+  list.id = "autocomplete-list";
   list.className = "autocomplete-list";
   wrapper.appendChild(list);
 
