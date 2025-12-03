@@ -87,7 +87,7 @@ const ATTRIBUTE_INFO = {
   },
   mass: {
     title: "Body Mass (in g)",
-    desc: "Arrows show direction\nBody mass is categorized in classes: 0-100g, 100-1000g, 1000-3000g, >3000g.",
+    desc: "Body mass classes: 0-100g / 100-1000g / 1000-3000g / >3000g.\nArrows show direction",
     buttons: [
       { cls: "incorrect", label: "Incorrect" },
       { cls: "partial", label: "Same\nclass" },
@@ -95,7 +95,7 @@ const ATTRIBUTE_INFO = {
     ]
   },
   beak: {
-    title: "Beak Index",
+    title: "Beak",
     desc: "Index of the length of the beak relative to the specie body mass.\nVaries between 0 and 1. High values suggest a long beak.\nArrows show direction.",
     buttons: [
       { cls: "incorrect", label: "Incorrect" },
