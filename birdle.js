@@ -265,7 +265,7 @@ function handleGuess(choice) {
   const tiles = [
     { label: "Taxa", value: `${guess.Order}<br>&gt;&nbsp;${guess.Family}`, score: compareTaxa(guess, targetBird)},
     { label: "Mass", value: `${guess.Mass} g ${massArrow}`, score: compareMass(guess.Mass, targetBird.Mass) },
-    { label: "Beak Index", value: `${guess["Beak.Index"]?.toFixed(2)} ${beakArrow}`, score: compareBeak(guess["Beak.Index"], targetBird["Beak.Index"]) },
+    { label: "Beak", value: `${guess["Beak.Index"]?.toFixed(2)} ${beakArrow}`, score: compareBeak(guess["Beak.Index"], targetBird["Beak.Index"]) },
     { label: "Realm", value: guess.Realm, score: compareRealm(guess.Realm, targetBird.Realm) },
     { label: "Habitat", value: guess.Habitat, score: compareExact(guess.Habitat, targetBird.Habitat) },
     { label: "Migration", value: guess.Migration, score: compareExact(guess.Migration, targetBird.Migration) },
