@@ -52,6 +52,15 @@ body {
   font-weight: bold;
 }
 
+.subtitle {
+    text-align: center;
+    font-size: 25px;
+    color: white;          /* soft grey text */
+    margin-top: 0px;    /* pull it closer to the title */
+    margin-bottom: 25px;  /* spacing before search bar */
+    font-weight: 300;     /* light/clean look */
+}
+
 /* ---------------------------------------------------
    SPOTLE-STYLE FULLSCREEN MODAL
 --------------------------------------------------- */
@@ -236,8 +245,7 @@ body {
   background: white;
   color: black;
   padding: 0 22px;
-  border-radius: 10px;
-  border: 2px solid black;
+  border: none;
   font-weight: bold;
   cursor: pointer;
   height: 45px;
@@ -263,7 +271,7 @@ body {
 
 .status-text {
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
   margin-top: 10px;
 }
 
@@ -485,14 +493,16 @@ body {
 }
 
 #guessInput {
-  width: 100%;
-  max-width: 350px;
-  height: 28px;
-  font-size: 16px;
-  border-radius: 10px;
-  padding: 10px 20px;
-  border: 2px solid #ccc;
-  outline: none;
+    width: 100%;
+    padding: 10px 16px;     /* ↓ smaller height */
+    border: none;           /* remove border */
+    outline: none;          /* remove focus outline */
+    border-radius: 20px;    /* ← more rounded */
+    font-size: 16px;
+    background: #ffffff;    /* white input */
+    color: #000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);   /* soft shadow */
+    transition: background 0.2s, box-shadow 0.2s;
 }
 
 #guessInput:focus {
@@ -533,6 +543,19 @@ body {
   font-weight: bold;
 }
 
+/* Greyed-out disabled search bar */
+#guessInput.disabled {
+  background-color: #555 !important;
+  color: #999 !important;
+  border: none;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.autocomplete-list.disabled {
+  display: none !important;
+}
+
 /* -------------------------------------
    MOBILE LAYOUT
 -------------------------------------- */
@@ -563,10 +586,10 @@ body {
 
   #guessInput {
     width: 95%;
-    height: 40px;
-    font-size: 18px;
+    height: 25px;
+    font-size: 16px;
     padding: 10px 16px;
-    border-radius: 10px;
+    border-radius: 25px;
     margin: 0 auto;
   }
 

@@ -6,6 +6,8 @@ let targetBird = null;
 let guessesRemaining = 10;
 let usedNames = new Set();
 let guessHistory = [];
+let gameOver = false;
+
 
 let currentLang = "en";   // default language
 
@@ -189,11 +191,30 @@ function extractMLCode(iframeHtml) {
 //-------------------------------------------------------
 //  START / RESET GAME
 //-------------------------------------------------------
+
+function disableSearchBar() {
+  const input = document.getElementById("guessInput");
+  const list = document.getElementById("autocompleteList");
+
+  input.classList.add("disabled");
+  input.setAttribute("disabled", "true");
+
+  list.classList.add("disabled");
+}
+
 function startGame() {
   targetBird = birds[Math.floor(Math.random() * birds.length)];
   guessesRemaining = 10;
   usedNames.clear();
   guessHistory = [];
+  gameOver = false;
+
+  // Re-enable search bar
+  const input = document.getElementById("guessInput");
+  const list = document.getElementById("autocompleteList");
+  input.classList.remove("disabled");
+  input.removeAttribute("disabled");
+  list.classList.remove("disabled");
 
   document.getElementById("history").innerHTML = "";
   document.getElementById("reveal").innerHTML = "";
@@ -241,10 +262,14 @@ function compareExact(g, t) {
   return g === t ? "correct" : "wrong";
 }
 
+
 //-------------------------------------------------------
 //  HANDLE GUESS
 //-------------------------------------------------------
 function handleGuess(choice) {
+
+  if (gameOver) return;       // ⬅ prevents guesses after game end
+  
   if (!choice || usedNames.has(choice)) return;
 
   const guess = birds.find(b => b.Name === choice);
@@ -254,6 +279,20 @@ function handleGuess(choice) {
   guessesRemaining--;
   updateStatus();
 
+  // -----------------------------------------
+  // CHECK IF CORRECT BIRD → END GAME
+  // -----------------------------------------
+  if (choice === targetBird.Name) {
+
+    revealFinal(true);    // your existing win reveal UI
+    gameOver = true;
+    disableSearchBar();
+    return;
+  }
+
+  // -----------------------------------------
+  // NORMAL (INCORRECT) GUESS BEHAVIOUR
+  // -----------------------------------------
   const massArrow =
     guess.Mass < targetBird.Mass ? "↑" :
     guess.Mass > targetBird.Mass ? "↓" : "";
@@ -275,8 +314,13 @@ function handleGuess(choice) {
 
   displayGuess(choice, tiles);
 
-  if (guessesRemaining === 0 && choice !== targetBird.Name) {
+  // -----------------------------------------
+  // CHECK IF OUT OF GUESSES → END GAME
+  // -----------------------------------------
+  if (guessesRemaining === 0) {
     revealFinal();
+    gameOver = true;
+    disableSearchBar();
   }
 }
 
@@ -458,6 +502,17 @@ function setupAutocomplete() {
 
     renderList(matches, q);
   });
+
+  // Show full list when focusing an empty input
+  input.addEventListener("focus", () => {
+    const q = input.value.trim();
+
+    if (q === "") {
+        const matches = birds.slice(0, 50);  // show first 50 birds
+        renderList(matches, "");
+        list.style.display = "block";
+    }
+});
 
   //---------------------------------------------------
   // CLICK → SELECT
