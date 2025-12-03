@@ -7,6 +7,17 @@ let guessesRemaining = 10;
 let usedNames = new Set();
 let guessHistory = [];
 
+let currentLang = "en";   // default language
+
+// Language → field mapping in birds.json
+const LANG_MAP = {
+  en: "Vname",
+  fr: "Fr.Name"
+  // Add more languages later:
+  // es: "Es.Name",
+  // de: "De.Name"
+};
+
 const MASS_CATEGORIES = [
   { max: 100, label: "0-100" },
   { max: 1000, label: "100-1000" },
@@ -26,27 +37,151 @@ fetch("birds.json")
     startGame();
   });
 
+
+
+// ------------------------
+// RULES MODAL SYSTEM
+// ------------------------
+document.addEventListener("DOMContentLoaded", () => {
+    const rulesModal = document.getElementById("rulesModal");
+    const rulesBtn = document.getElementById("rulesBtn");
+    const closeRules = document.getElementById("closeRules");
+
+    if (!rulesModal || !rulesBtn || !closeRules) {
+        console.error("Modal elements not found in DOM");
+        return;
+    }
+
+    rulesBtn.onclick = () => {
+      rulesModal.classList.remove("hidden");
+    };
+
+    closeRules.onclick = () => {
+      rulesModal.classList.add("hidden");
+    };
+
+    // Close modal if clicking outside the window
+    rulesModal.addEventListener("click", (e) => {
+      if (e.target === rulesModal) {
+        rulesModal.classList.add("hidden");
+      }
+    });
+});
+
+// ---------------------------------------
+// RULES ATTRIBUTE SYSTEM (Spotle style)
+// ---------------------------------------
+
+const rulesDetails = document.getElementById("rulesDetails");
+const attrTiles = document.querySelectorAll(".rules-attr-tile");
+
+const ATTRIBUTE_INFO = {
+  taxa: {
+    title: "Taxa",
+    desc: "Order > Family.",
+    buttons: [
+      { cls: "incorrect", label: "Incorrect" },
+      { cls: "partial", label: "Order\ncorrect" },
+      { cls: "correct", label: "Correct" }
+    ]
+  },
+  mass: {
+    title: "Body Mass (in g)",
+    desc: "Arrows show direction\nBody mass is categorized in classes: 0-100g, 100-1000g, 1000-3000g, >3000g.",
+    buttons: [
+      { cls: "incorrect", label: "Incorrect" },
+      { cls: "partial", label: "Same\nclass" },
+      { cls: "correct", label: "Correct" }
+    ]
+  },
+  beak: {
+    title: "Beak Index",
+    desc: "Index of the length of the beak relative to the specie body mass.\nVaries between 0 and 1. High values suggest a long beak.\nArrows show direction.",
+    buttons: [
+      { cls: "incorrect", label: "Incorrect" },
+      { cls: "partial", label: "Close\n(±0.125)" },
+      { cls: "correct", label: "Exact" }
+    ]
+  },
+  realm: {
+    title: "Realm",
+    desc: "Afrotropical / Indomalayan / Neartic / Neotropical / Oceania / Palearctic / South Polar.",
+    buttons: [
+      { cls: "incorrect", label: "Incorrect" },
+      { cls: "partial", label: "Partial\noverlap" },
+      { cls: "correct", label: "Correct" }
+    ]
+  },
+  habitat: {
+    title: "Habitat",
+    desc: "Forest / Grassland / Dry plains / Wetland / Marine.",
+    buttons: [
+      { cls: "incorrect", label: "Incorrect" },
+      { cls: "correct", label: "Correct" }
+    ]
+  },
+  migration: {
+    title: "Migration",
+    desc: "Sedentary / Partial Migrants / Migratory.",
+    buttons: [
+      { cls: "incorrect", label: "Incorrect" },
+      { cls: "correct", label: "Correct" }
+    ]
+  },
+  nest: {
+    title: "Nest",
+    desc: "Open / Closed / Cavity / Mound / Other (Brood Parasitism, Absence of nest).",
+    buttons: [
+      { cls: "incorrect", label: "Incorrect" },
+      { cls: "correct", label: "Correct" }
+    ]
+  },
+  diet: {
+    title: "Primary Diet",
+    desc: "Frugivore / Granivore / Herbivore (leaves, flowers, algaes...) / Invertebrate / Vertebrate / Scavenger / Omnivore.",
+    buttons: [
+      { cls: "incorrect", label: "Incorrect" },
+      { cls: "correct", label: "Correct" }
+    ]
+  }
+};
+
+// Expand tile
+attrTiles.forEach(tile => {
+  tile.addEventListener("click", () => {
+    const key = tile.dataset.attr;
+
+    attrTiles.forEach(t => t.classList.remove("active"));
+    tile.classList.add("active");
+
+    const info = ATTRIBUTE_INFO[key];
+
+    rulesDetails.classList.remove("hidden");
+    rulesDetails.innerHTML = `
+      <h3>${info.title}</h3>
+      <p>${info.desc.replace(/\n/g, "<br>")}</p>
+      <div class="rule-detail-buttons">
+        ${info.buttons
+            .map(b => `<div class="rule-button ${b.cls}">${b.label.replace(/\n/g, "<br>")}</div>`)
+            .join("")}
+      </div>
+    `;
+  });
+});
+
 //-------------------------------------------------------
 //  EXTRACT IMAGE FROM ML
 //-------------------------------------------------------
-
-  function extractMLImage(iframeHtml) {
+function extractMLImage(iframeHtml) {
   if (!iframeHtml) return null;
-
-  // Look for the asset ID inside the iframe embed URL
   const match = iframeHtml.match(/asset\/(\d+)\//);
   if (!match) return null;
-
   const assetId = match[1];
-
-  // Build a direct raw-image URL (640px version)
   return `https://cdn.download.ams.birds.cornell.edu/api/v1/asset/${assetId}/1200`;
 }
 
 function extractMLCode(iframeHtml) {
   if (!iframeHtml) return null;
-
-  // Extract the numeric asset ID
   const match = iframeHtml.match(/asset\/(\d+)\//);
   return match ? match[1] : null;
 }
@@ -69,6 +204,7 @@ function updateStatus() {
   document.getElementById("status").innerText =
     `Guesses remaining: ${guessesRemaining}`;
 }
+
 
 //-------------------------------------------------------
 //  COMPARISON HELPERS
@@ -118,8 +254,7 @@ function handleGuess(choice) {
   guessesRemaining--;
   updateStatus();
 
-  // ---- Direction arrows ----
-    const massArrow =
+  const massArrow =
     guess.Mass < targetBird.Mass ? "↑" :
     guess.Mass > targetBird.Mass ? "↓" : "";
 
@@ -140,180 +275,74 @@ function handleGuess(choice) {
 
   displayGuess(choice, tiles);
 
-  if (choice === targetBird.Name || guessesRemaining === 0) {
+  if (guessesRemaining === 0 && choice !== targetBird.Name) {
     revealFinal();
   }
 }
 
 //-------------------------------------------------------
-//  DISPLAY GUESS BLOCK
+//  DISPLAY GUESS BLOCK (LANGUAGE-AWARE)
 //-------------------------------------------------------
 function displayGuess(name, tiles) {
   const history = document.getElementById("history");
   const row = document.createElement("div");
   row.className = "guess-row";
+  row.dataset.birdName = name;
 
   const bird = birds.find(b => b.Name === name);
+  const field = LANG_MAP[currentLang];
+  const commonName = bird[field];
+  const sciName = bird.Sname;
 
   row.innerHTML = `
     <div class="guess-container">
-
-      <!-- IMAGE + NAME ABOVE -->
       <div class="image-section">
 
-      <div class="bird-name-display centered-name">
-      <span class="common-name"><b>${bird.Vname}</b></span>
-      <span class="scientific-name"><i>(${bird.Sname})</i></span>
-      </div>
+        <div class="bird-name-display centered-name">
+          <span class="common-name"><b>${commonName}</b></span>
+          <span class="scientific-name"><i>(${sciName})</i></span>
+        </div>
 
-      ${(() => {
-      const img = extractMLImage(bird.Picture);
-      return img ? `<img class="bird-photo" src="${img}" />` : "<div>No image</div>";
-      })()}
-
-  <button class="info-toggle"><i class="bi bi-info-circle-fill"></i></button>
-
-        <div class="extra-info hidden">
-
-             ${(() => {
-            const mlCode = extractMLCode(bird.Picture);
-            return mlCode ? `
-            <p>
-            <a href="https://macaulaylibrary.org/asset/${mlCode}"
-            target="_blank"
-            class="info-link">
-            ML${mlCode}
-            </a>
-            </p>` : "";
-            })()}
-
-            ${bird.Doi ? `
-            <p>
-             <a href="${bird.Doi}" target="_blank" class="info-link">Learn more</a>
-            </p>` : ""
-            }
-
-      </div>
-
-      </div>
-
-      <!-- TILE GRIDS -->
-      <div class="tile-grids-wrapper">
-      <div class="tile-grid grid-top"></div>
-      <div class="tile-grid grid-bottom"></div>
-      </div>
-
-      </div>
-      `;
-
-  const gridTop = row.querySelector(".grid-top");
-const gridBottom = row.querySelector(".grid-bottom");
-
-// First 4 tiles → top grid
-tiles.slice(0, 4).forEach(t => {
-  gridTop.innerHTML += `
-    <div class="tile ${t.score}">
-      <div class="tile-content">
-        <span class="attr-label">${t.label}</span>
-        <span class="attr-value"><b>${t.value}</b></span>
-      </div>
-    </div>`;
-});
-
-// Last 4 tiles → bottom grid
-tiles.slice(4).forEach(t => {
-  gridBottom.innerHTML += `
-    <div class="tile ${t.score}">
-      <div class="tile-content">
-        <span class="attr-label">${t.label}</span>
-        <span class="attr-value"><b>${t.value}</b></span>
-      </div>
-    </div>`;
-});
-
-  row.querySelector(".info-toggle").addEventListener("click", (e) => {
-  const panel = e.target.nextElementSibling;
-  if (panel) panel.classList.toggle("hidden");
-  });
-
-  history.prepend(row);
-}
-
-//-------------------------------------------------------
-//  FINAL REVEAL (same layout as guess)
-//-------------------------------------------------------
-function revealFinal() {
-  const container = document.getElementById("reveal");
-  container.innerHTML = "";
-
-  const row = document.createElement("div");
-  row.className = "guess-row";
-  row.style.background = "#2ECC71"; // green reveal
-
-  const bird = targetBird;
-
-  row.innerHTML = `
-    <div class="guess-container">
-
-      <div class="image-section">
         ${(() => {
-        const img = extractMLImage(bird.Picture);
-        return img ? `<img class="bird-photo" src="${img}" />` : "";
+          const img = extractMLImage(bird.Picture);
+          return img ? `<img class="bird-photo" src="${img}" />` : "<div>No image</div>";
         })()}
 
         <button class="info-toggle"><i class="bi bi-info-circle-fill"></i></button>
 
         <div class="extra-info hidden">
+          ${(() => {
+            const mlCode = extractMLCode(bird.Picture);
+            const mlPart = mlCode
+              ? `<a href="https://macaulaylibrary.org/asset/${mlCode}" target="_blank" class="info-link">ML${mlCode}</a>`
+              : "";
 
-  ${(() => {
-      const mlCode = extractMLCode(bird.Picture);
-      return mlCode ? `
-        <p>
-          <b>ML${mlCode}</b> —
-          <a href="https://macaulaylibrary.org/asset/${mlCode}" target="_blank">
-            Macaulay Library
-          </a>
-        </p>` : "";
-  })()}
+            const doiPart = bird.Doi
+              ? `<a href="${bird.Doi}" target="_blank" class="info-link">Learn more</a>`
+              : "";
 
-  ${bird.Doi ? `
-    <p>
-      <a href="${bird.Doi}" target="_blank"><b>Learn more</b></a>
-    </p>` : ""
-  }
-</div>
+            if (mlPart || doiPart) {
+              return `<p>Credits: ${mlPart}${mlPart && doiPart ? ". " : ""}${doiPart}</p>`;
+            }
+            return "";
+          })()}
+        </div>
 
       </div>
 
-      <h2 class="reveal-title">
-      🦜 The Mystery Bird Was:<br>
-      <span class="common-name"><b>${bird.Vname}</b></span>
-      <span class="scientific-name"><i>(${bird.Sname})</i></span>
-      </h2>
-
       <div class="tile-grids-wrapper">
-      <div class="tile-grid grid-top"></div>
-      <div class="tile-grid grid-bottom"></div>
-</div>
-
+        <div class="tile-grid grid-top"></div>
+        <div class="tile-grid grid-bottom"></div>
+      </div>
     </div>
   `;
 
-  const tiles = [
-    { label: "Taxa", value: `${guess.Order}<br>&gt;&nbsp;${guess.Family}`, score: compareTaxa(guess, targetBird)},
-    { label: "Mass", value: `${bird.Mass} g`, score: "" },
-    { label: "Beak Index", value: bird["Beak.Index"].toFixed(2), score: "" },
-    { label: "Realm", value: bird.Realm, score: "" },
-    { label: "Habitat", value: bird.Habitat, score: "" },
-    { label: "Migration", value: bird.Migration, score: "" },
-    { label: "Nest", value: bird.Nest, score: "" },
-    { label: "Diet", value: bird.Diet, score: "" }
-  ];
+  const gridTop = row.querySelector(".grid-top");
+  const gridBottom = row.querySelector(".grid-bottom");
 
-  const grid = row.querySelector(".tile-grid");
-  tiles.forEach(t => {
-    grid.innerHTML += `
-      <div class="tile reveal-tile">
+  tiles.slice(0, 4).forEach(t => {
+    gridTop.innerHTML += `
+      <div class="tile ${t.score}">
         <div class="tile-content">
           <span class="attr-label">${t.label}</span>
           <span class="attr-value"><b>${t.value}</b></span>
@@ -321,15 +350,49 @@ function revealFinal() {
       </div>`;
   });
 
-  row.querySelector(".info-toggle").addEventListener("click", () => {
-    row.querySelector(".extra-info").classList.toggle("hidden");
+  tiles.slice(4).forEach(t => {
+    gridBottom.innerHTML += `
+      <div class="tile ${t.score}">
+        <div class="tile-content">
+          <span class="attr-label">${t.label}</span>
+          <span class="attr-value"><b>${t.value}</b></span>
+        </div>
+      </div>`;
   });
 
-  container.prepend(row);
+  row.querySelector(".info-toggle").addEventListener("click", (e) => {
+    const panel = e.currentTarget.parentElement.querySelector(".extra-info");
+    panel.classList.toggle("hidden");
+  });
+
+  history.prepend(row);
 }
 
 //-------------------------------------------------------
-//  AUTOCOMPLETE SYSTEM (with arrow-key navigation)
+//  FINAL REVEAL (LANGUAGE-AWARE)
+//-------------------------------------------------------
+function revealFinal() {
+  const bird = targetBird;
+
+  const tiles = [
+    { label: "Taxa", value: `${bird.Order}<br>&gt;&nbsp;${bird.Family}`, score: "correct" },
+    { label: "Mass", value: `${bird.Mass} g`, score: "correct" },
+    { label: "Beak Index", value: bird["Beak.Index"].toFixed(2), score: "correct" },
+    { label: "Realm", value: bird.Realm, score: "correct" },
+    { label: "Habitat", value: bird.Habitat, score: "correct" },
+    { label: "Migration", value: bird.Migration, score: "correct" },
+    { label: "Nest", value: bird.Nest, score: "correct" },
+    { label: "Diet", value: bird.Diet, score: "correct" }
+  ];
+
+  const container = document.getElementById("reveal");
+  container.innerHTML = "";
+
+  displayGuess(bird.Name, tiles);
+}
+
+//-------------------------------------------------------
+//  AUTOCOMPLETE SYSTEM (LANGUAGE-AWARE)
 //-------------------------------------------------------
 function setupAutocomplete() {
   const input = document.getElementById("guessInput");
@@ -342,16 +405,23 @@ function setupAutocomplete() {
 
   let activeIndex = -1;
 
+  function getDisplayName(bird) {
+    const field = LANG_MAP[currentLang];
+    const common = bird[field];
+    return `${common} (${bird.Sname})`;
+  }
+
   //---------------------------------------------------
-  // RENDER AUTOCOMPLETE LIST
+  // RENDER AUTOCOMPLETE
   //---------------------------------------------------
   function renderList(matches, q) {
     list.innerHTML = matches.map((b, i) => {
+      const disp = getDisplayName(b);
+
       const highlighted =
         q === ""
-          ? b.Name
-          : b.Name.replace(new RegExp(q, "gi"),
-              m => `<span class="highlight">${m}</span>`);
+          ? disp
+          : disp.replace(new RegExp(q, "gi"), m => `<span class="highlight">${m}</span>`);
 
       return `
         <div class="autocomplete-item"
@@ -366,7 +436,7 @@ function setupAutocomplete() {
   }
 
   //---------------------------------------------------
-  // FILTER LIST ON INPUT
+  // FILTER LIST
   //---------------------------------------------------
   input.addEventListener("input", () => {
     const q = input.value.trim().toLowerCase();
@@ -377,7 +447,8 @@ function setupAutocomplete() {
       matches = birds.slice(0, 50);
     } else {
       matches = birds.filter(b =>
-        b.Name.toLowerCase().includes(q)).slice(0, 50);
+        getDisplayName(b).toLowerCase().includes(q)
+      ).slice(0, 50);
     }
 
     if (matches.length === 0) {
@@ -395,7 +466,9 @@ function setupAutocomplete() {
     const item = e.target.closest(".autocomplete-item");
     if (!item) return;
 
-    input.value = item.dataset.name;
+    const bird = birds.find(b => b.Name === item.dataset.name);
+
+    input.value = getDisplayName(bird);
     input.dataset.fromSuggestion = "true";
     list.style.display = "none";
 
@@ -410,7 +483,6 @@ function setupAutocomplete() {
     const items = Array.from(list.querySelectorAll(".autocomplete-item"));
     const count = items.length;
 
-    // QUICK CLEAR if value came from suggestion
     if (e.key === "Backspace" && input.dataset.fromSuggestion === "true") {
       e.preventDefault();
       input.value = "";
@@ -419,7 +491,6 @@ function setupAutocomplete() {
       return;
     }
 
-    // ARROW DOWN: move highlight AND update input text
     if (e.key === "ArrowDown") {
       e.preventDefault();
       if (!count) return;
@@ -429,15 +500,13 @@ function setupAutocomplete() {
       items.forEach(el => el.classList.remove("active"));
       const activeItem = items[activeIndex];
       activeItem.classList.add("active");
-      activeItem.scrollIntoView({ block: "nearest" });
 
-      // show selected suggestion in the input
-      input.value = activeItem.dataset.name;
+      const bird = birds.find(b => b.Name === activeItem.dataset.name);
+      input.value = getDisplayName(bird);
       input.dataset.fromSuggestion = "true";
       return;
     }
 
-    // ARROW UP: move highlight AND update input text
     if (e.key === "ArrowUp") {
       e.preventDefault();
       if (!count) return;
@@ -447,22 +516,26 @@ function setupAutocomplete() {
       items.forEach(el => el.classList.remove("active"));
       const activeItem = items[activeIndex];
       activeItem.classList.add("active");
-      activeItem.scrollIntoView({ block: "nearest" });
 
-      // show selected suggestion in the input
-      input.value = activeItem.dataset.name;
+      const bird = birds.find(b => b.Name === activeItem.dataset.name);
+      input.value = getDisplayName(bird);
       input.dataset.fromSuggestion = "true";
       return;
     }
 
-    // ENTER = always submit what's in the input box
     if (e.key === "Enter") {
       e.preventDefault();
 
-      const finalChoice = input.value.trim();
-      if (!finalChoice) return;
+      const disp = input.value.trim();
+      if (!disp) return;
 
-      handleGuess(finalChoice);
+      const matchBird = birds.find(b =>
+        getDisplayName(b).toLowerCase() === disp.toLowerCase()
+      );
+
+      if (!matchBird) return;
+
+      handleGuess(matchBird.Name);
 
       input.value = "";
       input.dataset.fromSuggestion = "false";
@@ -491,3 +564,48 @@ document.getElementById("rulesBtn").onclick = () => {
   const panel = document.getElementById("rulesPanel");
   panel.style.display = panel.style.display === "none" ? "block" : "none";
 };
+
+//-------------------------------------------------------
+//  LANGUAGE SELECT MENU
+//-------------------------------------------------------
+document.getElementById("langSelect").addEventListener("change", (e) => {
+  currentLang = e.target.value;
+
+  document.getElementById("guessInput").placeholder =
+    currentLang === "en" ? "Type a guess..." :
+    currentLang === "fr" ? "Nom d’oiseau..." :
+    "Type a guess...";
+
+  document.getElementById("guessInput").dispatchEvent(new Event("input"));
+
+  rerenderHistoryInCurrentLanguage();
+
+  if (targetBird && document.getElementById("reveal").children.length > 0) {
+    const reveal = document.getElementById("reveal");
+    reveal.innerHTML = "";
+    revealFinal();
+  }
+});
+
+//-------------------------------------------------------
+//  RE-RENDER HISTORY
+//-------------------------------------------------------
+function rerenderHistoryInCurrentLanguage() {
+  const historyEl = document.getElementById("history");
+  const rows = Array.from(historyEl.children);
+
+  rows.forEach(row => {
+    const name = row.dataset.birdName;
+    const bird = birds.find(b => b.Name === name);
+
+    const field = LANG_MAP[currentLang];
+    const commonName = bird[field];
+    const sciName = bird.Sname;
+
+    const nameBoxCommon = row.querySelector(".bird-name-display .common-name");
+    const nameBoxSci = row.querySelector(".bird-name-display .scientific-name");
+
+    if (nameBoxCommon) nameBoxCommon.innerHTML = `<b>${commonName}</b>`;
+    if (nameBoxSci) nameBoxSci.innerHTML = `<i>(${sciName})</i>`;
+  });
+}

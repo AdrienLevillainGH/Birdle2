@@ -15,7 +15,34 @@ body {
   text-rendering: optimizeLegibility;
   font-family: "Geist", sans-serif;
   font-weight: 400;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------
+      FIXED HEADBAND (like Spotle)
+--------------------------------------------------- */
+.top-buttons {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0; /* ensures full width */
+    width: 100%;
+    height: 60px;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+
+    padding: 0 20px;
+    background: #111; /* matches site background */
+    z-index: 9999;
+
+    box-sizing: border-box;
+}
+/* Ensure page content is not hidden under fixed bar */
+body {
+  padding-top: 70px;
 }
 
 .title {
@@ -25,27 +52,195 @@ body {
   font-weight: bold;
 }
 
-.top-buttons {
+/* ---------------------------------------------------
+   SPOTLE-STYLE FULLSCREEN MODAL
+--------------------------------------------------- */
+.modal-overlay {
   position: fixed;
-  right: 20px;
-  top: 15px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.65);
   display: flex;
-  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000; /* above the top-buttons */
 }
 
+.hidden {
+  display: none !important;
+}
+
+.modal-content {
+  background: #ffffff;
+  color: #000;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  border-radius: 12px;
+  padding: 25px;
+  position: relative;
+  overflow-y: auto;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* Close icon */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.close-btn i {
+  font-size: 28px;
+}
+
+/* Content formatting */
+.modal-inner h2 {
+  margin-top: 10px;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.modal-inner ul {
+  padding-left: 20px;
+  font-size: 16px;
+}
+
+.modal-inner li {
+  margin: 10px 0;
+}
+
+/* ---------------------------------------------------
+   RULES ATTRIBUTES GRID (Spotle Style)
+--------------------------------------------------- */
+.rules-attribute-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.rules-attr-tile {
+  background: #222;
+  color: white;
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  border: 2px solid #333;
+  transition: 0.2s;
+
+}
+
+.rules-attr-tile:hover {
+  background: #333;
+}
+
+.rules-attr-tile.active {
+  background: #444;
+  border-color: #666;
+}
+
+/* Expanded detail section */
+.rules-details {
+  margin-top: 20px;
+  background: #111;
+  padding: 18px;
+  border-radius: 12px;
+  color: white;
+  border: 2px solid #333;
+}
+
+.rule-detail-buttons {
+  display: flex;
+  justify-content: center;   /* centers buttons horizontally */
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.rule-button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  text-align: center;
+
+  height: 60px;
+  width: 90px;     /* <— use width instead of max-width + flex */
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rule-button.incorrect {
+  background: #555;
+}
+
+.rule-button.partial {
+  background: #b8a50a;
+}
+
+.rule-button.correct {
+  background: #2ecc71;
+}
+
+/* -------------------------------------
+   ICON BUTTON (restart, help, language)
+--------------------------------------- */
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: white;
+  color: black;
+  border: 0px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.icon-btn i {
+  font-size: 26px;
+  color: black;
+}
+
+.icon-btn:hover {
+  background: #e8e8e8;
+}
+
+/* Language icon specifically */
+.lang-btn i {
+  font-size: 28px;
+}
+
+/* -------------------------------
+   STANDARD BUTTON (unchanged)
+-------------------------------- */
 .btn-standard {
   background: white;
   color: black;
-  padding: 0 22px;          /* horizontal only */
+  padding: 0 22px;
   border-radius: 10px;
   border: 2px solid black;
   font-weight: bold;
   cursor: pointer;
-  height: 45px;             /* fixed height */
+  height: 45px;
   display: flex;
-  align-items: center;      /* vertical centering of text */
+  align-items: center;
 }
 
+/* Input + layout */
 .input-row {
   display: flex;
   justify-content: center;
@@ -75,9 +270,7 @@ body {
   font-size: 13px;
 }
 
-.hidden {
-  display: none;
-}
+.hidden { display: none; }
 
 /* Bird names */
 .bird-name-display {
@@ -109,12 +302,11 @@ body {
   background: #1A1A1A;
   padding: 30px;
   border-radius: 15px;
-  margin: 15px auto;        /* center the card */
-  max-width: 500px;         /* <<< the new card limit */
-  width: 100%;              /* shrink nicely on mobile */
+  margin: 15px auto;
+  max-width: 500px;
+  width: 100%;
 }
 
-/* reveal row on top – green background */
 .reveal-row {
   background: #2ECC71;
   color: black;
@@ -149,7 +341,7 @@ body {
   display: block;
 }
 
-/* Info button + panel */
+/* Info button */
 .info-toggle {
   position: absolute;
   bottom: 5px;
@@ -161,7 +353,7 @@ body {
   width: 30px;
   height: 30px;
   cursor: pointer;
-  font-size: 18px; /* updated for Bootstrap icon */
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -182,7 +374,7 @@ body {
 }
 
 .extra-info p {
-  margin: 0px 0;
+  margin: 0;
 }
 
 .info-link {
@@ -196,32 +388,23 @@ body {
   opacity: 0.75;
 }
 
-    /* Fixed total width for both grids */
+/* Tile grids */
 .tile-grids-wrapper {
-  width: 450px;            /* ← set the width you want */
+  width: 450px;
   display: flex;
   flex-direction: column;
-  align-items: center;     /* center within the card */
+  align-items: center;
 }
 
 .grid-top,
 .grid-bottom {
-  width: 100%;             /* inherit the fixed width */
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
 }
 
-.grid-top {
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-width: 100%;
-}
-
 .grid-bottom {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  width: 100%;
   margin-top: 8px;
 }
 
@@ -236,7 +419,6 @@ width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow-wrap: break-word;
 }
 
 .tile-content {
@@ -244,7 +426,6 @@ width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
 }
 
 .attr-label {
@@ -258,16 +439,12 @@ width: 100%;
   font-size: 16px;
 }
 
-.tile b,
-.tile div {
-  white-space: normal;
-}
-
-/* coloured states for guesses */
+/* Tile colors */
 .correct { background: #2ECC71 !important; }
 .partial { background: #F1C40F !important; }
 .wrong   { background: #444 !important; }
 
+/* Reveal box */
 .reveal-box {
   margin-top: 30px;
   background: #2ECC71;
@@ -278,13 +455,11 @@ width: 100%;
   text-align: center;
 }
 
-/* green background for reveal row */
 .reveal-row {
   background: #1a1a1a;
   color: #1a1a1a;
 }
 
-/* tiles in the reveal row styled like buttons */
 .reveal-tile {
   background: #2ECC71 !important;
   color: white;
@@ -298,6 +473,7 @@ width: 100%;
   color: white;
 }
 
+/* Autocomplete */
 .autocomplete-container {
   position: relative;
   width: 400px;
@@ -305,7 +481,7 @@ width: 100%;
 
 #guessInput {
   width: 100%;
-  max-width: 350px; /* desktop-friendly */
+  max-width: 350px;
   height: 28px;
   font-size: 16px;
   border-radius: 10px;
@@ -352,42 +528,13 @@ width: 100%;
   font-weight: bold;
 }
 
-.icon-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: white;
-  border: 2px solid black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  padding: 0;
-}
-
-.icon-btn i {
-  font-size: 30px;
-  color: black;
-}
-
-.icon-btn:hover {
-  background: #e8e8e8;
-}
-
-/* ---------------------------------------------------
-      CLEAN MOBILE LAYOUT — ALL PIXEL VALUES
---------------------------------------------------- */
+/* -------------------------------------
+   MOBILE LAYOUT
+-------------------------------------- */
 @media (max-width: 600px) {
 
-  /* --- GLOBAL LAYOUT --- */
   .title {
     font-size: 32px;
-  }
-
-  .top-buttons {
-    position: static;
-    justify-content: center;
-    margin-top: 10px;
   }
 
   .btn-standard {
@@ -396,10 +543,8 @@ width: 100%;
     font-size: 14px;
   }
 
-  /* --- SEARCH BAR + AUTOCOMPLETE --- */
   #search-block {
     width: 100%;
-    max-width: none;
     padding: 10px 0;
     align-items: center;
     margin: 0 auto;
@@ -426,10 +571,9 @@ width: 100%;
 
   .autocomplete-item {
     font-size: 14px;
-    padding: 10px;
+    padding: 10px
   }
 
-  /* --- STATUS TEXT --- */
   #status {
     width: 350px;
     text-align: center;
@@ -437,10 +581,9 @@ width: 100%;
     margin-top: 6px;
   }
 
-  /* --- GUESS ROW --- */
   .guess-row {
     width: 95%;
-    max-width: 360px;     /* clean pixel width */
+    max-width: 360px;
     margin-left: auto;
     margin-right: auto;
     padding: 15px;
@@ -450,40 +593,34 @@ width: 100%;
     max-width: 360px;
   }
 
-  /* --- IMAGE --- */
   .bird-photo {
     width: 260px;
     height: auto;
   }
 
-  /* --- TILE GRID --- */
   .tile-grids-wrapper {
     width: 98%;
-    max-width: 360px
+    max-width: 360px;
   }
 
   .grid-top,
   .grid-bottom {
-    width: 100%
+    width: 100%;
   }
 
-  /* --- TEXT SIZES --- */
   .bird-name-display .common-name,
   .bird-name-display .scientific-name {
     font-size: 16px;
   }
 
-  /* Smaller text inside tiles */
   .tile .attr-label,
   .tile .attr-value {
-    font-size: 14px !important;   /* Was ~16px */
+    font-size: 14px !important;
     line-height: 1.2;
   }
 
-  /* Optional: slightly reduce the tile padding too */
   .tile {
     padding: 8px;
     min-height: 60px;
   }
-
 }
