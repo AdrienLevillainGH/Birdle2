@@ -396,24 +396,6 @@
     "Fr.Name": "Grand Tétras"
   },
   {
-    "Name": "Black Grouse (Lyrurus tetrix)",
-    "Sname": "Lyrurus tetrix",
-    "Vname": "Black Grouse",
-    "Order": "Gallif.",
-    "Family": "Phasianid.",
-    "Mass": 1262,
-    "Realm": "Palearctic",
-    "Habitat": "Forest",
-    "Migration": "Sedentary",
-    "Nest": "Open",
-    "IUCN": "LC",
-    "Beak.Index": 0.22,
-    "Diet": "Herbivore",
-    "Doi": "https://doi.org/10.2173/bow.blagro1.01.1",
-    "Picture": "<iframe src=\"https://macaulaylibrary.org/asset/220309141/embed\" height=\"300\" width=\"640\" frameborder=\"0\" allowfullscreen><\/iframe>",
-    "Fr.Name": "Tétras lyre"
-  },
-  {
     "Name": "Golden Pheasant (Chrysolophus pictus)",
     "Sname": "Chrysolophus pictus",
     "Vname": "Golden Pheasant",
@@ -853,7 +835,7 @@
     "Family": "Larid.",
     "Mass": 1232,
     "Realm": "Oceania",
-    "Habitat": "Coastal",
+    "Habitat": "Marine",
     "Migration": "Partial",
     "Nest": "Open",
     "IUCN": "LC",
@@ -1454,7 +1436,7 @@
     "Beak.Index": 0.39,
     "Diet": "Scavenger",
     "Doi": "https://doi.org/10.2173/bow.egyvul1.01",
-    "Picture": "<iframe src=\"https://macaulaylibrary.org/asset/625432857/embed\" height=\"552\" width=\"640\" frameborder=\"0\" allowfullscreen><\/iframe>",
+    "Picture": "<iframe src=\"https://macaulaylibrary.org/asset/553869731/embed\" height=\"442\" width=\"640\" frameborder=\"0\" allowfullscreen><\/iframe>",
     "Fr.Name": "Percnoptère d'Égypte"
   },
   {
