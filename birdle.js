@@ -96,7 +96,7 @@ const ATTRIBUTE_INFO = {
   },
   beak: {
     title: "Beak",
-    desc: "Index of the length of the beak relative to the specie body mass.\nVaries between 0 and 1. High values suggest a long beak.\nArrows show direction.",
+    desc: "Length of the beak relative to the specie body mass.\nVaries between 0 and 1. High values suggest a long beak.\nArrows show direction.",
     buttons: [
       { cls: "incorrect", label: "Incorrect" },
       { cls: "partial", label: "Close\n(±0.125)" },
@@ -130,7 +130,7 @@ const ATTRIBUTE_INFO = {
   },
   nest: {
     title: "Nest",
-    desc: "Open / Closed / Cavity / Mound / Other (Brood Parasitism, Absence of nest).",
+    desc: "Open / Closed / Cavity (Tree cavity, Burrow, Crevices) / Mound / Other (Brood Parasitism, Absence of nest).",
     buttons: [
       { cls: "incorrect", label: "Incorrect" },
       { cls: "correct", label: "Correct" }
@@ -573,7 +573,7 @@ document.getElementById("langSelect").addEventListener("change", (e) => {
 
   document.getElementById("guessInput").placeholder =
     currentLang === "en" ? "Type a guess..." :
-    currentLang === "fr" ? "Nom d’oiseau..." :
+    currentLang === "fr" ? "Cherche un oiseau..." :
     "Type a guess...";
 
   document.getElementById("guessInput").dispatchEvent(new Event("input"));
