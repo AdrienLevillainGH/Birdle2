@@ -574,6 +574,10 @@ body {
   pointer-events: none;
 }
 
+#status.disabled {
+    color: #777;   /* greyed-out text */
+}
+
 .autocomplete-list.disabled {
   display: none !important;
 }

@@ -200,6 +200,7 @@ function disableSearchBar() {
   input.setAttribute("disabled", "true");
 
   list.classList.add("disabled");
+  document.getElementById("status").classList.add("disabled");
 }
 
 function startGame() {
@@ -215,6 +216,7 @@ function startGame() {
   input.classList.remove("disabled");
   input.removeAttribute("disabled");
   list.classList.remove("disabled");
+  document.getElementById("status").classList.remove("disabled");
 
   document.getElementById("history").innerHTML = "";
   document.getElementById("reveal").innerHTML = "";
